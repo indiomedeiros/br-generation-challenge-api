@@ -1,0 +1,16 @@
+@baseUrl = http://localhost:3000
+
+### Create Participants
+POST {{baseUrl}}/participant
+Content-Type: application/json
+
+{
+  "fullName": "Índio medeiros",
+  "age": 30,
+  "firstSemesterGrade": 10,
+  "secondSemesterGrade": 1,
+  "test": 20
+}
+
+
+
