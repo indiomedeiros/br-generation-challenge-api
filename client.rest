@@ -14,3 +14,17 @@ Content-Type: application/json
 ### Get All Participants
 GET {{baseUrl}}/participant
 
+### Get Participants by id
+GET {{baseUrl}}/participant/1681b549-216e-461d-8e78-344496d471e1
+
+### Update Participants by id
+PATCH  {{baseUrl}}/participant/53ebca58-04d5-473b-a513-1b105ecd8f11
+Content-Type: application/json
+
+{
+  "fullName": "Chrislaine Souza"
+}
+
+### Delete Participants by id
+DELETE   {{baseUrl}}/participant/1681b549-216e-461d-8e78-344496d471e1
+

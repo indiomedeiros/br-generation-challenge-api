@@ -9,6 +9,7 @@ import { ParticipantController } from './infra/controllers/participant.controlle
 import { FindAllParticipantsUseCase } from './application/usecases/find-all-participants.usecase';
 import { FindByIdUseCase } from './application/usecases/find-by-id-participant.usecase';
 import { RemoveParticipantUseCase } from './application/usecases/remove-participant.usecase';
+import { UpdateParticipantUseCase } from './application/usecases/update-participant.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Participant])],
@@ -18,6 +19,7 @@ import { RemoveParticipantUseCase } from './application/usecases/remove-particip
     GradeCalculatorService,
     FindAllParticipantsUseCase,
     FindByIdUseCase,
+    UpdateParticipantUseCase,
     RemoveParticipantUseCase,
     {
       provide: ParticipantRepository,

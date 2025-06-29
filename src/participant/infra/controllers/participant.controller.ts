@@ -1,10 +1,20 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { Participant } from '../../domain/entities/participant.entity';
 import { CreateParticipantDto } from 'src/participant/application/dto/create-participant.dto';
 import { CreateParticipantUseCase } from 'src/participant/application/usecases/create-participant.usecase';
 import { FindAllParticipantsUseCase } from 'src/participant/application/usecases/find-all-participants.usecase';
 import { FindByIdUseCase } from 'src/participant/application/usecases/find-by-id-participant.usecase';
 import { RemoveParticipantUseCase } from 'src/participant/application/usecases/remove-participant.usecase';
+import { UpdateParticipantUseCase } from 'src/participant/application/usecases/update-participant.usecase';
+import { UpdateParticipantDto } from 'src/participant/application/dto/update-participant.dto';
 
 @Controller('participant')
 export class ParticipantController {
@@ -13,6 +23,7 @@ export class ParticipantController {
     private readonly findAllParticipantsUseCase: FindAllParticipantsUseCase,
     private readonly findByIdParticipantUseCase: FindByIdUseCase,
     private readonly removeParticipantUseCase: RemoveParticipantUseCase,
+    private readonly updateParticipantUseCase: UpdateParticipantUseCase,
   ) {}
 
   @Post()
@@ -30,6 +41,17 @@ export class ParticipantController {
   @Get(':id')
   async findById(@Param('id') id: string): Promise<Participant> {
     return await this.findByIdParticipantUseCase.execute(id);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateParticipantDto: UpdateParticipantDto,
+  ): Promise<Participant> {
+    return await this.updateParticipantUseCase.execute(
+      id,
+      updateParticipantDto,
+    );
   }
 
   @Delete(':id')
