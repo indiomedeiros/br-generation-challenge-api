@@ -1,98 +1,258 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# BR Generation Challenge - Sistema de Gerenciamento de Participantes
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 📋 Sobre o Projeto
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este é um sistema de gerenciamento de participantes desenvolvido com **NestJS** e **TypeORM**, utilizando alguns conceitos de arquitetura limpa. O sistema permite o cadastro, consulta, atualização e remoção de participantes, calculando automaticamente a média final baseada nas notas dos semestres.
 
-## Description
+## 🏗️ Arquitetura
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+O projeto segue alguns princípios da **Clean Architecture** e **Domain-Driven Design (DDD)**, organizando o código em camadas:
 
-## Project setup
-
-```bash
-$ npm install
+```
+src/
+├── participant/
+│   ├── application/          # Camada de Aplicação
+│   │   ├── dto/             # Data Transfer Objects
+│   │   └── usecases/        # Casos de Uso
+│   ├── domain/              # Camada de Domínio
+│   │   ├── entities/        # Entidades
+│   │   ├── repositories/    # Interfaces de Repositórios
+│   │   └── services/        # Serviços de Domínio
+│   ├── infra/               # Camada de Infraestrutura
+│   │   └── orm/             # Implementações ORM/Repositórios
+│   └── presentation/        # Camada de Apresentação
+│       └── controllers/     # Controladores HTTP
 ```
 
-## Compile and run the project
+## 🚀 Tecnologias Utilizadas
 
-```bash
-# development
-$ npm run start
+- **[NestJS](https://nestjs.com/)** - Framework Node.js progressivo
+- **[TypeORM](https://typeorm.io/)** - ORM para TypeScript/JavaScript
+- **[MySQL](https://www.mysql.com/)** - Sistema de gerenciamento de banco de dados
+- **[TypeScript](https://www.typescriptlang.org/)** - Superset tipado do JavaScript
+- **[Class Validator](https://github.com/typestack/class-validator)** - Validação de dados
+- **[Class Transformer](https://github.com/typestack/class-transformer)** - Transformação de objetos
 
-# watch mode
-$ npm run start:dev
+## 📊 Funcionalidades
 
-# production mode
-$ npm run start:prod
+### Entidade Participant
+
+| Campo                 | Tipo   | Descrição                               |
+| --------------------- | ------ | --------------------------------------- |
+| `id`                  | UUID   | Identificador único                     |
+| `fullName`            | String | Nome completo (3-50 caracteres)         |
+| `age`                 | Number | Idade (mínimo 18 anos e máximo 30)      |
+| `firstSemesterGrade`  | Number | Nota do primeiro semestre (0-10)        |
+| `secondSemesterGrade` | Number | Nota do segundo semestre (0-10)         |
+| `finalAverage`        | Number | Média final (calculada automaticamente) |
+
+### Endpoints da API
+
+#### 📝 Criar Participante
+
+```http
+POST /participant
+Content-Type: application/json
+
+{
+  "fullName": "Índio medeiros",
+  "age": 30,
+  "firstSemesterGrade": 10,
+  "secondSemesterGrade": 5
+}
 ```
 
-## Run tests
+#### 📋 Listar Todos os Participantes
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```http
+GET /participant
 ```
 
-## Deployment
+#### 🔍 Buscar Participante por ID
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```http
+GET /participant/1681b549-216e-461d-8e78-344496d471e1
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+#### ✏️ Atualizar Participante
 
-## Resources
+```http
+PATCH /participant/53ebca58-04d5-473b-a513-1b105ecd8f11
+Content-Type: application/json
 
-Check out a few resources that may come in handy when working with NestJS:
+{
+  "fullName": "Chrislaine Souza"
+}
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+#### 🗑️ Remover Participante
 
-## Support
+```http
+DELETE /participant/1681b549-216e-461d-8e78-344496d471e1
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🛠️ Configuração e Instalação
 
-## Stay in touch
+### Pré-requisitos
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Node.js (versão 18 ou superior)
+- MySQL (versão 8 ou superior)
+- npm ou yarn
 
-## License
+### Passos para Instalação
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+1. **Clone o repositório**
+
+   ```bash
+   git clone <url-do-repositorio>
+   cd br-generation-challenge
+   ```
+
+2. **Instale as dependências**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure o banco de dados**
+   - Crie um banco de dados MySQL com o nome `generation`
+   - Configure as variáveis de ambiente (veja seção abaixo)
+
+4. **Configure as variáveis de ambiente**
+   Copie o arquivo `.env-example` para `.env` e configure as variáveis:
+
+   ```bash
+   cp .env-example .env
+   ```
+
+   Edite o arquivo `.env` com suas configurações:
+
+   ```env
+   # APPLICATION CONFIG
+   PORT=3000
+
+   # Database connection type (mysql, postgres, sqlite, etc.)
+   DATABASE_TYPE=mysql
+
+   # Database server configuration
+   DATABASE_HOST=localhost
+   DATABASE_PORT=3306
+
+   # Database credentials
+   DATABASE_USERNAME=root
+   DATABASE_PASSWORD=sua_senha
+
+   # Database name for the application
+   DATABASE_DATABASE=generation
+
+   # TypeORM settings
+   DATABASE_AUTOLOADENTITIES=1
+   DATABASE_SYNCHRONIZE=0
+   ```
+
+## 🏃‍♂️ Executando o Projeto
+
+### Desenvolvimento
+
+```bash
+npm run start:dev
+```
+
+### Produção
+
+```bash
+npm run build
+npm run start:prod
+```
+
+## 📝 Scripts Disponíveis
+
+| Script                | Descrição                      |
+| --------------------- | ------------------------------ |
+| `npm run build`       | Compila o projeto              |
+| `npm run start`       | Inicia o servidor              |
+| `npm run start:dev`   | Inicia em modo desenvolvimento |
+| `npm run start:debug` | Inicia em modo debug           |
+| `npm run lint`        | Executa o linter               |
+| `npm run format`      | Formata o código               |
+
+## 🎯 Casos de Uso Implementados
+
+1. **CreateParticipantUseCase** - Criação de novos participantes
+2. **FindAllParticipantsUseCase** - Listagem de todos os participantes
+3. **FindByIdParticipantUseCase** - Busca de participante por ID
+4. **UpdateParticipantUseCase** - Atualização de dados do participante
+5. **RemoveParticipantUseCase** - Remoção de participantes
+
+## 🧮 Serviços de Domínio
+
+### GradeCalculatorService
+
+Responsável pelo cálculo da média final dos participantes:
+
+- Calcula a média aritmética entre as notas dos dois semestres
+- Fórmula: `(firstSemesterGrade + secondSemesterGrade) / 2`
+
+## 🔍 Validações
+
+### CreateParticipantDto
+
+- **fullName**: String obrigatória, entre 3 e 50 caracteres
+- **age**: Número obrigatório, mínimo 18 anos e máximo de 30 anos
+- **firstSemesterGrade**: Número obrigatório, entre 0 e 10
+- **secondSemesterGrade**: Número obrigatório, entre 0 e 10
+
+### UpdateParticipantDto
+
+- Todos os campos são opcionais
+- Mesmas validações dos campos correspondentes no CreateParticipantDto
+
+## 📋 Testes com client.rest
+
+O projeto inclui um arquivo `client.rest` com exemplos de requisições HTTP para testar a API:
+
+```http
+@baseUrl = http://localhost:3000
+
+### Create Participants
+POST {{baseUrl}}/participant
+Content-Type: application/json
+
+{
+  "fullName": "Índio medeiros",
+  "age": 30,
+  "firstSemesterGrade": 10,
+  "secondSemesterGrade": 5
+}
+
+### Get All Participants
+GET {{baseUrl}}/participant
+
+### Get Participants by id
+GET {{baseUrl}}/participant/1681b549-216e-461d-8e78-344496d471e1
+
+### Update Participants by id
+PATCH {{baseUrl}}/participant/53ebca58-04d5-473b-a513-1b105ecd8f11
+Content-Type: application/json
+
+{
+  "fullName": "Chrislaine Souza"
+}
+
+### Delete Participants by id
+DELETE {{baseUrl}}/participant/1681b549-216e-461d-8e78-344496d471e1
+```
+
+## 🤝 Contribuindo
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
+3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
+4. Push para a branch (`git push origin feature/nova-feature`)
+5. Abra um Pull Request
+
+---
+
+Desenvolvido como parte do desafio da Generation Brasil.
+
+---
