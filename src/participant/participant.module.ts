@@ -6,6 +6,7 @@ import { CreateParticipantUseCase } from './application/usecases/create-particip
 import { GradeCalculatorService } from './domain/services/grade-calculator.service';
 import { ParticipantRepository } from './domain/repositories/participant-repository';
 import { ParticipantController } from './infra/controllers/participant.controller';
+import { FindAllParticipantsUseCase } from './application/usecases/find-all-participants.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Participant])],
@@ -13,6 +14,7 @@ import { ParticipantController } from './infra/controllers/participant.controlle
   providers: [
     CreateParticipantUseCase,
     GradeCalculatorService,
+    FindAllParticipantsUseCase,
     {
       provide: ParticipantRepository,
       useClass: TypeOrmParticipantRepository,
