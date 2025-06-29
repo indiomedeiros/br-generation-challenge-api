@@ -8,9 +8,9 @@ Content-Type: application/json
   "fullName": "Índio medeiros",
   "age": 30,
   "firstSemesterGrade": 10,
-  "secondSemesterGrade": 1,
-  "test": 20
+  "secondSemesterGrade": 5,
 }
 
-
+### Get All Participants
+GET {{baseUrl}}/participant
 
