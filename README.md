@@ -243,13 +243,6 @@ Content-Type: application/json
 DELETE {{baseUrl}}/participant/1681b549-216e-461d-8e78-344496d471e1
 ```
 
-## 🤝 Contribuindo
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
 
 ---
 
