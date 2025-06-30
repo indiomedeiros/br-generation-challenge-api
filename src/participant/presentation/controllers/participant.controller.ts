@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Participant } from '../../domain/entities/participant.entity';
 import { CreateParticipantDto } from 'src/participant/application/dto/create-participant.dto';
@@ -15,8 +16,10 @@ import { FindByIdUseCase } from 'src/participant/application/usecases/find-by-id
 import { RemoveParticipantUseCase } from 'src/participant/application/usecases/remove-participant.usecase';
 import { UpdateParticipantUseCase } from 'src/participant/application/usecases/update-participant.usecase';
 import { UpdateParticipantDto } from 'src/participant/application/dto/update-participant.dto';
+import { HateoasInterceptor } from '../interceptors/hateoas.interceptor';
 
 @Controller('participant')
+@UseInterceptors(HateoasInterceptor)
 export class ParticipantController {
   constructor(
     private readonly createParticipantUseCase: CreateParticipantUseCase,
