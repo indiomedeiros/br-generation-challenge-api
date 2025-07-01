@@ -2,7 +2,7 @@
 
 ## 📋 Sobre o Projeto
 
-Este é um sistema de gerenciamento de participantes desenvolvido com **NestJS** e **TypeORM**, utilizando alguns conceitos de arquitetura limpa. O sistema permite o cadastro, consulta, atualização e remoção de participantes, calculando automaticamente a média final baseada nas notas dos semestres.
+Este é um sistema de gerenciamento de participantes desenvolvido com **NestJS** e **TypeORM**, utilizando alguns conceitos de arquitetura limpa. O sistema é uma API com nível de maturidade 3 que faz o cadastro, consulta, atualização, remoção de participantes e calcula automaticamente a média final baseada nas notas dos semestres.
 
 ## 🏗️ Arquitetura
 
@@ -11,17 +11,18 @@ O projeto segue alguns princípios da **Clean Architecture** e **Domain-Driven D
 ```
 src/
 ├── participant/
-│   ├── application/          # Camada de Aplicação
-│   │   ├── dto/             # Data Transfer Objects
-│   │   └── usecases/        # Casos de Uso
-│   ├── domain/              # Camada de Domínio
-│   │   ├── entities/        # Entidades
-│   │   ├── repositories/    # Interfaces de Repositórios
-│   │   └── services/        # Serviços de Domínio
-│   ├── infra/               # Camada de Infraestrutura
-│   │   └── orm/             # Implementações ORM/Repositórios
-│   └── presentation/        # Camada de Apresentação
-│       └── controllers/     # Controladores HTTP
+│   ├── application/         # 📋 Camada de Aplicação
+│   │   ├── dto/             #    Data Transfer Objects
+│   │   └── usecases/        #    Casos de Uso (Regras de Negócio)
+│   ├── domain/              # 🏛️ Camada de Domínio
+│   │   ├── entities/        #    Entidades de Negócio
+│   │   ├── repositories/    #    Contratos de Repositórios
+│   │   └── services/        #    Serviços de Domínio
+│   ├── infra/               # 🔧 Camada de Infraestrutura
+│   │   └── orm/             #    Implementações ORM/Repositórios
+│   └── presentation/        # 🌐 Camada de Apresentação
+│       ├── controllers/     #    Controladores HTTP
+│       └── interceptors/    #    Interceptadores (HATEOAS)
 ```
 
 ## 🚀 Tecnologias Utilizadas
@@ -89,6 +90,43 @@ Content-Type: application/json
 
 ```http
 DELETE /participant/1681b549-216e-461d-8e78-344496d471e1
+```
+
+#### **📊 Exemplo de Response com HATEOAS:**
+
+```json
+{
+  "data": {
+    "id": "7210bd27-3831-4e93-9700-808f313f7aba",
+    "fullName": "Índio medeiros",
+    "age": 30,
+    "firstSemesterGrade": 10,
+    "secondSemesterGrade": 1,
+    "finalAverage": 5.5
+  },
+  "_links": [
+    {
+      "rel": "self",
+      "href": "http://localhost:3000/participant/7210bd27-3831-4e93-9700-808f313f7aba",
+      "method": "POST"
+    },
+    {
+      "rel": "get",
+      "href": "http://localhost:3000/participant/7210bd27-3831-4e93-9700-808f313f7aba",
+      "method": "GET"
+    },
+    {
+      "rel": "update",
+      "href": "http://localhost:3000/participant/7210bd27-3831-4e93-9700-808f313f7aba",
+      "method": "PATCH"
+    },
+    {
+      "rel": "delete",
+      "href": "http://localhost:3000/participant/7210bd27-3831-4e93-9700-808f313f7aba",
+      "method": "DELETE"
+    }
+  ]
+}
 ```
 
 ## 🛠️ Configuração e Instalação
@@ -242,7 +280,6 @@ Content-Type: application/json
 ### Delete Participants by id
 DELETE {{baseUrl}}/participant/1681b549-216e-461d-8e78-344496d471e1
 ```
-
 
 ---
 
