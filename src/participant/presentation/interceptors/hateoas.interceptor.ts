@@ -17,7 +17,7 @@ export class HateoasInterceptor implements NestInterceptor {
     return next.handle().pipe(
       map((data: Participant) => {
         const hasId = data.id;
-        if (data.id) {
+        if (hasId) {
           _links.push(
             {
               rel: 'self',
