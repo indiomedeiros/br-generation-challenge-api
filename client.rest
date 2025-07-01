@@ -1,30 +1,32 @@
 @baseUrl = http://localhost:3000
+@id = 0df88ac5-8ccc-4178-9e2b-98ba51e1e06b
 
 ### Create Participants
 POST {{baseUrl}}/participant
 Content-Type: application/json
 
-{
-  "fullName": "Índio medeiros",
-  "age": 30,
-  "firstSemesterGrade": 10,
-  "secondSemesterGrade": 5
-}
+  {
+    "fullName": "Marina Morena Silva Pinto",
+    "age": 24,
+    "firstSemesterGrade": 5.5,
+    "secondSemesterGrade": 6.0
+  }
 
 ### Get All Participants
 GET {{baseUrl}}/participant
 
 ### Get Participants by id
-GET {{baseUrl}}/participant/1681b549-216e-461d-8e78-344496d471e1
+GET {{baseUrl}}/participant/{{id}}
 
 ### Update Participants by id
-PATCH  {{baseUrl}}/participant/53ebca58-04d5-473b-a513-1b105ecd8f11
+PATCH  {{baseUrl}}/participant/{{id}}
 Content-Type: application/json
 
 {
-  "fullName": "Chrislaine Souza"
+
+  "secondSemesterGrade": 5
 }
 
 ### Delete Participants by id
-DELETE   {{baseUrl}}/participant/1681b549-216e-461d-8e78-344496d471e1
+DELETE   {{baseUrl}}/participant/{{id}} 
 
